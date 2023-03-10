@@ -43,18 +43,24 @@ enum {
     TD_SLA,
     TD_CAPLOCK,
     TD_ALT,
-    TD_CRT
+    TD_CRT,
+    TD_A,
+    TD_E,
+    TD_I,
+    TD_O,
+    TD_U,
+    TD_N
 };
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT_split_3x6_3(
   //|-----------------------------------------------------|                    |-----------------------------------------------------|
-     KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
+     KC_ESC,  KC_Q,    KC_W,    TD(TD_E),    KC_R,    KC_T,                         KC_Y,    TD(TD_U),    TD(TD_I),    TD(TD_O),    KC_P,    KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     KC_TAB,  KC_A,   KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L,  TD(TD_PC), TD(TD_COMI),
+     KC_TAB,  TD(TD_A),   KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L,  TD(TD_PC), TD(TD_COMI),
   //---------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-     TD(TD_CAPLOCK), KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,                 KC_N,    KC_M,    KC_COMM, KC_DOT,  TD(TD_SLA), RSFT_T(KC_ENT),
+     TD(TD_CAPLOCK), KC_Z,   KC_X,    KC_C,    KC_V,    KC_B,                  TD(TD_N),    KC_M,    KC_COMM, KC_DOT,  TD(TD_SLA), RSFT_T(KC_ENT),
   //---------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                          TD(TD_CRT),  LOWER, KC_SPC,     KC_SPC,  RAISE, TD(TD_ALT)
                                       //`--------------------------'  `--------------------------'
@@ -87,11 +93,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_ADJUST] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_PCMM, KC_7, KC_8, KC_9, KC_ASTR, KC_SLEP,
+        QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_SLEP,                      KC_PEQL, KC_P7, KC_P8, KC_P9, KC_PAST, KC_NUHS,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      KC_DOT, KC_4, KC_5, KC_6, KC_MINS, KC_SLSH,
+      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, MACRO1,                      KC_PDOT, KC_P4, KC_P5, KC_P6, KC_PMNS, KC_PSLS,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      KC_0, KC_1, KC_2, KC_3, KC_PLUS, KC_ENT,
+      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, MACRO2,                      KC_P0, KC_P1, KC_P2, KC_P3, KC_PPLS, KC_ENT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_LCTL, KC_TRNS, KC_SPC,    KC_SPC, KC_TRNS, KC_RALT
                                       //`--------------------------'  `--------------------------'
@@ -105,8 +111,14 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_COMI] = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, LSFT(KC_QUOT)),
     [TD_SLA] = ACTION_TAP_DANCE_DOUBLE(KC_SLSH, LSFT(KC_SLSH)),
     [TD_CAPLOCK] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
-    [TD_ALT] = ACTION_TAP_DANCE_DOUBLE(KC_RALT, KC_LALT),
+    [TD_ALT] = ACTION_TAP_DANCE_DOUBLE(KC_LALT, KC_RALT),
     [TD_CRT] = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_LALT),
+    [TD_A] = ACTION_TAP_DANCE_DOUBLE(KC_A, US_AACU),
+    [TD_E] = ACTION_TAP_DANCE_DOUBLE(KC_E, US_EACU),
+    [TD_I] = ACTION_TAP_DANCE_DOUBLE(KC_I, US_IACU),
+    [TD_O] = ACTION_TAP_DANCE_DOUBLE(KC_O, US_OACU),
+    [TD_U] = ACTION_TAP_DANCE_DOUBLE(KC_U, US_UACU),
+    [TD_N] = ACTION_TAP_DANCE_DOUBLE(KC_N, US_NTIL)
 };
 
 
@@ -485,16 +497,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           layer_off(_ADJUST);
         }
         return false;
-         case MACRO1:
+    case MACRO1:
     if (record->event.pressed) {
-            SEND_STRING("aqui el texto de la macro1\nque quieras pegar");
+            SEND_STRING("Octavio Dulcey");
         } else {
 
         }
         return false;
-         case MACRO2:
+    case MACRO2:
     if (record->event.pressed) {
-            SEND_STRING("aqui el texto de la macro2\nque quieras pegar");
+            SEND_STRING("0979111361");
         } else {
 
         }
